@@ -1,6 +1,5 @@
 import { Utils } from './Utils';
 import { SlackEvents } from './SlackEvents';
-
 declare function require(name: string);
 
 class SlackProxy implements SlackEvents {
@@ -63,7 +62,6 @@ class SlackProxy implements SlackEvents {
         });
         return rtmInitPromise;
     }
-
 
 
     public bindActionOnRTMConnectionOpened(fnCallback: (data: any) => void): void {

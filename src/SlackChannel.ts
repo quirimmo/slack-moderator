@@ -1,5 +1,6 @@
 import { SlackProxy } from './SlackProxy';
 import { Utils } from './Utils';
+import { Channel } from './Channel';
 
 class SlackChannel {
 
@@ -34,6 +35,23 @@ class SlackChannel {
         });
     }
     
+    public static getChannelByID(channelID: string): Promise<any> {
+        return SlackChannel.getChannelsList().then((channels: any) => {
+            return channels.find((channel: any) => {
+                return channel.id === channelID;
+            });
+        });
+    }
+
+    public static kickOutUserFromChannel(userID: string, channelID: string): Promise<any> {
+        let returnPromise: Promise<any> = new Promise((resolve, reject) => {
+            SlackProxy.getInstance().webClient.channels.kick(channelID, userID, (err: any, res: any) => {
+                Utils.onMethodResults(err, res, undefined, resolve, reject);
+            });
+        });
+        return returnPromise;
+    }
+
 }
 
 export { SlackChannel };

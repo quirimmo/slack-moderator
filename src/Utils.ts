@@ -69,4 +69,4 @@ class Utils {
     
 }
 
-export { Utils };
+export { Utils,require };
