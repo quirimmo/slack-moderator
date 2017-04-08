@@ -7,7 +7,7 @@ let dns: any = require('dns');
 
 class Utils {
 
-    constructor() { }
+    private constructor() { }
 
     public static getTextSeparator(): string {
         return `======================================================================================\n`;
@@ -57,6 +57,14 @@ class Utils {
 
     public static getSlackConfig(): any {
         return require('./../config/slack.json');
+    }
+
+    public static onMethodResults(err: any, res: any, property: any, resolve: (data: any) => void, reject: (data: any) => void): void {
+        if (err) {
+            reject(err);
+            throw err;
+        }
+        property ? resolve(res[property]) : resolve(res);
     }
     
 }

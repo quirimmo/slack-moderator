@@ -13,12 +13,24 @@ class SlackProxy implements SlackEvents {
     RTM_EVENTS: any;
     rtmClient: any;
     webClient: any;
+    private static instance: SlackProxy = null;
 
-    constructor() {
+    private constructor() {
         this.SLACK_CONFIG = Utils.getSlackConfig();
         this.moderators = this.SLACK_CONFIG.MODERATORS;
         this.inappropriateWords = this.SLACK_CONFIG.INAPPROPRIATE_WORDS;
+        this.initSlack().then((data: any) => {
+            console.log('Slack Moderator RTM Fully Connected!');
+        });
     }
+
+    public static getInstance(): SlackProxy {
+        if (this.instance === null) {
+            this.instance = new SlackProxy();
+        }
+        return this.instance;
+    }
+
 
     public initSlack(): Promise<any> {
         this.SLACK_CLIENT = require('@slack/client');
@@ -42,6 +54,7 @@ class SlackProxy implements SlackEvents {
         });
         return rtmInitPromise;
     }
+
 
     public bindActionOnRTMConnectionOpened(fnCallback: (data: any) => void): void {
         this.rtmClient.on(this.CLIENT_EVENTS.RTM.RTM_CONNECTION_OPENED, fnCallback);

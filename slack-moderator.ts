@@ -1,10 +1,7 @@
-import { SlackProxy } from "./src/SlackProxy";
+import { SlackChannel } from "./src/SlackChannel";
 
 console.log('Slack Moderator Started!');
 
-let slackProxy: SlackProxy = new SlackProxy();
-slackProxy.initSlack().then((data: any) => {
-
-    console.log('Slack Moderator Fully Connected!');
-    
+SlackChannel.getPublicChannelsList().then((channels: any) => {
+    console.log(channels);
 });
