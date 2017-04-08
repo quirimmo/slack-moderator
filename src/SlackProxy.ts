@@ -35,7 +35,6 @@ class SlackProxy implements SlackEvents {
 
     private initSlackRTMClient(): Promise<any> {
         let RtmClient: any = this.SLACK_CLIENT.RtmClient;
-        console.log(this.SLACK_CONFIG.TOKENS.BOT);
         this.rtmClient = new RtmClient(this.SLACK_CONFIG.TOKENS.BOT);
         this.rtmClient.start();
         let rtmInitPromise: Promise<any> = new Promise<any>((resolve, reject) => {
