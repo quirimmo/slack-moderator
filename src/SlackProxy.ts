@@ -37,15 +37,14 @@ class SlackProxy implements SlackEvents {
         let RtmClient: any = this.SLACK_CLIENT.RtmClient;
         this.rtmClient = new RtmClient(this.SLACK_CONFIG.TOKENS.BOT);
         this.rtmClient.start();
-        let rtmInitPromise: Promise<any> = new Promise<any>((resolve, reject) => {
+        let rtmInitPromise: Promise<any> = new Promise<any>((resolve: (data: any) => void, reject: (data: any) => void) => {
             this.bindActionOnRTMConnectionOpened(resolve);
         });
         return rtmInitPromise;
     }
 
-    public bindActionOnRTMConnectionOpened(fnCallback: any): void {
-        fnCallback();
-        // this.rtmClient.on(this.CLIENT_EVENTS.RTM.RTM_CONNECTION_OPENED, fnCallback);
+    public bindActionOnRTMConnectionOpened(fnCallback: (data: any) => void): void {
+        this.rtmClient.on(this.CLIENT_EVENTS.RTM.RTM_CONNECTION_OPENED, fnCallback);
     }
 
 }
