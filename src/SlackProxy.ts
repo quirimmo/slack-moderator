@@ -14,13 +14,18 @@ class SlackProxy implements SlackEvents {
     rtmClient: any;
     webClient: any;
     private static instance: SlackProxy = null;
-
+    private initRTMPromise: Promise<any>;
+    
+    
     private constructor() {
         this.SLACK_CONFIG = Utils.getSlackConfig();
         this.moderators = this.SLACK_CONFIG.MODERATORS;
         this.inappropriateWords = this.SLACK_CONFIG.INAPPROPRIATE_WORDS;
-        this.initSlack().then((data: any) => {
-            console.log('Slack Moderator RTM Fully Connected!');
+        this.initRTMPromise = new Promise<any>((resolve: (data: any) => void, reject: (data: any) => void) => {
+            this.initSlack().then((data: any) => {
+                console.log('Slack Moderator RTM Fully Connected!');
+                resolve('');
+            });
         });
     }
 
@@ -40,6 +45,10 @@ class SlackProxy implements SlackEvents {
         return this.initSlackRTMClient();
     }
 
+    public getRTMPromise(): Promise<any> {
+        return this.initRTMPromise;
+    }
+
     private initSlackWebClient(): void {
         let WebClient = this.SLACK_CLIENT.WebClient;
         this.webClient = new WebClient(this.SLACK_CONFIG.TOKENS.API);
@@ -54,6 +63,7 @@ class SlackProxy implements SlackEvents {
         });
         return rtmInitPromise;
     }
+
 
 
     public bindActionOnRTMConnectionOpened(fnCallback: (data: any) => void): void {
