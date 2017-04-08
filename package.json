@@ -1,0 +1,20 @@
+{
+    "name": "slack-moderator",
+    "version": "1.0.0",
+    "description": "A slack plugin in order to moderate channels on Slack and report inappropriate uses",
+    "main": "index.js",
+    "dependencies": {
+        "@slack/client": "^3.8.1"
+    },
+    "devDependencies": {},
+    "engines": {
+        "node": "0.12.x"
+    },
+    "keywords": [
+        "slack",
+        "moderator",
+        "slack-moderator"
+    ],
+    "author": "Quirino Lo Russo",
+    "license": "MIT"
+}
