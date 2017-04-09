@@ -11,7 +11,11 @@ class SlackMessage {
 
     private constructor() { }
 
-
+    /**
+     * Send the given message to the given channel through the web api. It can send also private messages to an user
+     * @param msg The message to be sent
+     * @param channelID The id of the channel where to send the message
+     */
     public static sendMessageThroughWeb(msg: string, channelID: string): Promise<any> {
         let returnPromise: Promise<any> = new Promise((resolve: any, reject: any) => {
             SlackProxy.getInstance().webClient.chat.postMessage(channelID, msg, (err: any, res: any) => {
@@ -21,6 +25,11 @@ class SlackMessage {
         return returnPromise;
     }
 
+    /**
+     * Send the given message to the given channel through RTM. It cannot send private messages to users
+     * @param msg The message to be sent
+     * @param channelID The id of the channel where to send the message
+     */
     public static sendMessageThroughRTM(msg: string, channelID: string): Promise<any> {
         var returnPromise: Promise<any> = new Promise((resolve: any, reject: any) => {
             SlackProxy.getInstance().initRTMPromise.then((data: any) => {
@@ -32,6 +41,10 @@ class SlackMessage {
         return returnPromise;
     }
 
+    /**
+     * Delete the given message from the channel based on the message timestamp
+     * @param message Message to be deleted
+     */
     public static deleteMessage(message: Message): Promise<any> {
         var returnPromise: Promise<any> = new Promise((resolve: any, reject: any) => {
             SlackProxy.getInstance().webClient.chat.delete(message.timestamp, message.channel, "as_user=true", (err: any, res: any) => {
@@ -41,6 +54,10 @@ class SlackMessage {
         return returnPromise;
     }
 
+    /**
+     * Send the given message to all the moderators reported in the slack config JSON file
+     * @param msg The message to be sent
+     */
     public static sendMessageToAllModerators(msg: string): Promise<any> {
         let promises: Array<Promise<any>> = [];
         let returnPromise: Promise<any>;
@@ -55,7 +72,10 @@ class SlackMessage {
         return Promise.all(promises);
     }
 
-
+    /**
+     * Analyse a message looking for the presence of the inappropriate words specified inside the slack config JSON file
+     * @param msg Message to be analysed
+     */
     public static analyseMessagesForInappropriateWords(msg: any): void {
         if (msg.type === 'message' && !msg.subtype) {
             let message: Message = new Message(msg.id, msg.text, msg.channel, msg.user, msg.type, msg.subtype, msg.ts, msg.file);

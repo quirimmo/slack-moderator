@@ -4,6 +4,7 @@ import { SlackUser } from "./src/service/SlackUser";
 
 console.log('Slack Moderator Started!');
 
+// execute code everytime a message is received in one of the channels where the bot is active
 SlackProxy.getInstance().bindActionOnMessageReceived(function(msg) {
     // moderate text messages
     SlackMessage.analyseMessagesForInappropriateWords(msg);
