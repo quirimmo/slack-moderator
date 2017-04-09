@@ -6,7 +6,10 @@ class SlackProxy implements SlackEvents {
 
     private static instance: SlackProxy = null;
     private SLACK_CONFIG: any;
-    
+    private static API_TOKEN: string = 'xoxp-143937138848-144732344213-166490598659-86a16d91b807bec706e7efb158733c2e';
+    private static BOT_TOKEN: string = 'xoxb-149511602132-a2yBdlMl1R5895GZJYRuBslC';
+
+
     moderators: Array<string>;
     inappropriateWords: Array<string>;
     SLACK_CLIENT: any;
@@ -48,12 +51,12 @@ class SlackProxy implements SlackEvents {
 
     private initSlackWebClient(): void {
         let WebClient = this.SLACK_CLIENT.WebClient;
-        this.webClient = new WebClient(this.SLACK_CONFIG.TOKENS.API);
+        this.webClient = new WebClient(SlackProxy.API_TOKEN);
     }
 
     private initSlackRTMClient(): Promise<any> {
         let RtmClient: any = this.SLACK_CLIENT.RtmClient;
-        this.rtmClient = new RtmClient(this.SLACK_CONFIG.TOKENS.BOT);
+        this.rtmClient = new RtmClient(SlackProxy.BOT_TOKEN);
         this.rtmClient.start();
         let rtmInitPromise: Promise<any> = new Promise<any>((resolve: (data: any) => void, reject: (data: any) => void) => {
             this.bindActionOnRTMConnectionOpened(resolve);
