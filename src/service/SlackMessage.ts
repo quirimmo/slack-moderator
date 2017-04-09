@@ -82,7 +82,7 @@ class SlackMessage {
             let regexp;
             SlackProxy.getInstance().inappropriateWords.forEach((word: string) => {
                 regexp = new RegExp(word, 'i');
-                if (msg.text.match(regexp)) {
+                if (msg.text.replace(/\s/g, '').match(regexp)) {
                     SlackMessage.reportInappropriateWordUse(word, message);
                 }
             });
