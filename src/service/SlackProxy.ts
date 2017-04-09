@@ -1,4 +1,4 @@
-import { Utils } from './Utils';
+import { Utils } from './../Utility/Utils';
 import { SlackEvents } from './SlackEvents';
 declare function require(name: string);
 

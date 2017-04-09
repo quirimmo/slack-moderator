@@ -1,4 +1,4 @@
-import { SlackChannel } from "./src/SlackChannel";
+import { SlackChannel } from "./src/service/SlackChannel";
 import { Channel } from "./src/model/Channel";
 
 console.log('Slack Moderator Started!');

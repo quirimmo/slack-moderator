@@ -1,6 +1,6 @@
-import { User } from "./User";
-import { Channel } from "./model/Channel";
-import { Message } from "./Message";
+import { User } from "./../model/User";
+import { Channel } from "./../model/Channel";
+import { Message } from "./../model/Message";
 
 declare function require(name: string);
 let dns: any = require('dns');
