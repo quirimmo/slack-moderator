@@ -4,6 +4,14 @@ interface SlackEvents {
     RTM_EVENTS: any;
 
     bindActionOnRTMConnectionOpened(fnCallback: Function): void ;
+    bindActionOnRTMAuthenticated(fnCallback: Function): void;
+
+    bindActionOnUserPresenceChanged(fnCallback: Function): void;
+    bindActionOnNewTeamMember(fnCallback: Function): void;
+
+    bindActionOnFileCreated(fnCallback: Function): void;
+    bindActionOnFileShared(fnCallback: Function): void;
+    bindActionOnMessageReceived(fnCallback: Function): void;
 
 }
 

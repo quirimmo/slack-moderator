@@ -67,6 +67,24 @@ class SlackProxy implements SlackEvents {
     public bindActionOnRTMConnectionOpened(fnCallback: (data: any) => void): void {
         this.rtmClient.on(this.CLIENT_EVENTS.RTM.RTM_CONNECTION_OPENED, fnCallback);
     }
+    public bindActionOnRTMAuthenticated(fnCallback: (data: any) => void): void {
+        this.rtmClient.on(this.CLIENT_EVENTS.RTM.AUTHENTICATED, fnCallback);
+    }
+    public bindActionOnUserPresenceChanged(fnCallback: (data: any) => void): void {
+        this.rtmClient.on(this.RTM_EVENTS.PRESENCE_CHANGE, fnCallback);
+    }
+    public bindActionOnNewTeamMember(fnCallback: (data: any) => void): void {
+        this.rtmClient.on(this.RTM_EVENTS.TEAM_JOIN, fnCallback);
+    }
+    public bindActionOnFileCreated(fnCallback: (data: any) => void): void {
+        this.rtmClient.on(this.RTM_EVENTS.FILE_CREATED, fnCallback);
+    }
+    public bindActionOnFileShared(fnCallback: (data: any) => void): void {
+        this.rtmClient.on(this.RTM_EVENTS.FILE_SHARED, fnCallback);
+    }
+    public bindActionOnMessageReceived(fnCallback: (data: any) => void): void {
+        this.rtmClient.on(this.RTM_EVENTS.MESSAGE, fnCallback);
+    }
 
 }
 
