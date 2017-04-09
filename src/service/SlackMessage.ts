@@ -60,7 +60,7 @@ class SlackMessage {
         if (msg.type === 'message' && !msg.subtype) {
             let message: Message = new Message(msg.id, msg.text, msg.channel, msg.user, msg.type, msg.subtype, msg.ts, msg.file);
             let regexp;
-            SlackProxy.getInstance().inappropriateWords.forEach((word) => {
+            SlackProxy.getInstance().inappropriateWords.forEach((word: string) => {
                 regexp = new RegExp(word, 'i');
                 if (msg.text.match(regexp)) {
                     SlackMessage.reportInappropriateWordUse(word, message);
