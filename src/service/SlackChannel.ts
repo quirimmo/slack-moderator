@@ -1,6 +1,5 @@
 import { SlackProxy } from './SlackProxy';
 import { Utils } from './../utility/Utils';
-import { Channel } from './../model/Channel';
 
 class SlackChannel {
 
@@ -44,7 +43,7 @@ class SlackChannel {
     }
 
     public static kickOutUserFromChannel(userID: string, channelID: string): Promise<any> {
-        let returnPromise: Promise<any> = new Promise((resolve, reject) => {
+        let returnPromise: Promise<any> = new Promise((resolve: any, reject: any) => {
             SlackProxy.getInstance().webClient.channels.kick(channelID, userID, (err: any, res: any) => {
                 Utils.onMethodResults(err, res, undefined, resolve, reject);
             });

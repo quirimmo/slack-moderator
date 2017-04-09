@@ -1,9 +1,9 @@
 import { User } from "./../model/User";
 import { Channel } from "./../model/Channel";
 import { Message } from "./../model/Message";
-
 declare function require(name: string);
 let dns: any = require('dns');
+let slackConfigPath: string = './../../config/slack.json';
 
 class Utils {
 
@@ -12,6 +12,7 @@ class Utils {
     public static getTextSeparator(): string {
         return `======================================================================================\n`;
     }
+
 
     public static getInappropriateMsgText(user: User, channel: Channel, msg: Message, word: string): string {
         let text: string = ``;
@@ -41,6 +42,7 @@ class Utils {
         return text;
     }
 
+
     public static getDNSHosts(): Promise<any> {
         let returnPromises: Array<Promise<any>> = [];
         let promise: Promise<any>;
@@ -56,7 +58,7 @@ class Utils {
     }
 
     public static getSlackConfig(): any {
-        return require('./../config/slack.json');
+        return require(slackConfigPath);
     }
 
     public static onMethodResults(err: any, res: any, property: any, resolve: (data: any) => void, reject: (data: any) => void): void {
@@ -69,4 +71,4 @@ class Utils {
     
 }
 
-export { Utils,require };
+export { Utils };
