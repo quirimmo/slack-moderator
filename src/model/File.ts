@@ -1,4 +1,4 @@
-interface File {
+class File {
     id: string;
     name: string;
     title: string;

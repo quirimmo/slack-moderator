@@ -1,6 +1,6 @@
 import { File } from "./File";
 
-interface Message {
+class Message {
     id: string;
     text: string;
     timestamp: number;
