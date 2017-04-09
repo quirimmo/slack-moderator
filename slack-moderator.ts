@@ -2,17 +2,24 @@ import { SlackProxy } from "./src/service/SlackProxy";
 import { SlackChannel } from "./src/service/SlackChannel";
 import { SlackMessage } from "./src/service/SlackMessage";
 import { SlackUser } from "./src/service/SlackUser";
+import { Message } from "./src/model/Message";
 import { Channel } from "./src/model/Channel";
 import { User } from "./src/model/User";
+import { File } from "./src/model/File";
 
 console.log('Slack Moderator Started!');
 
 SlackProxy.getInstance().bindActionOnMessageReceived(function(msg) {
+
+    console.log(msg);
+
+    // File f = new File();
+
     // moderate text messages
-    SlackMessage.analyseMessagesForInappropriateWords(msg);
+    // SlackMessage.analyseMessagesForInappropriateWords(msg);
 
     // detect file sharing
-    SlackMessage.analyseMessagesForFileSharing(msg);
+    // SlackMessage.analyseMessagesForFileSharing(msg);
 });
 
 // detect external accesses every five minutes
