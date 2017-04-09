@@ -1,16 +1,15 @@
 import { SlackChannel } from "./src/SlackChannel";
-import { Channel } from "./src/Channel";
+import { Channel } from "./src/model/Channel";
 
 console.log('Slack Moderator Started!');
 
-// SlackChannel.getChannelsList().then((channels: any) => {
-//     console.log(channels);
-// });
-SlackChannel.getChannelByID('C49K0TXPC').then((channel: any) => {
+let testingChannelID: string = 'C49K0TXPC';
+SlackChannel.getChannelByID(testingChannelID).then((channel: any) => {
     let selectedChannel: Channel = new Channel(channel.id, channel.name);
     console.log(selectedChannel);
 });
 
-// SlackProxy.getInstance().getRTMPromise().then((data: any) => {
+
+// SlackProxy.getInstance().initRTMPromise.then((data: any) => {
 //     console.log('Promise RTM Resolved');
 // });

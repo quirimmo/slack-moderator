@@ -1,5 +1,5 @@
 import { User } from "./User";
-import { Channel } from "./Channel";
+import { Channel } from "./model/Channel";
 import { Message } from "./Message";
 
 declare function require(name: string);

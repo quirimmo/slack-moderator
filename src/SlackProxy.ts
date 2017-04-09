@@ -4,7 +4,9 @@ declare function require(name: string);
 
 class SlackProxy implements SlackEvents {
 
-    SLACK_CONFIG: any;
+    private static instance: SlackProxy = null;
+    private SLACK_CONFIG: any;
+    
     moderators: Array<string>;
     inappropriateWords: Array<string>;
     SLACK_CLIENT: any;
@@ -12,8 +14,8 @@ class SlackProxy implements SlackEvents {
     RTM_EVENTS: any;
     rtmClient: any;
     webClient: any;
-    private static instance: SlackProxy = null;
-    private initRTMPromise: Promise<any>;
+    initRTMPromise: Promise<any>;
+
     
     
     private constructor() {
@@ -42,10 +44,6 @@ class SlackProxy implements SlackEvents {
         this.RTM_EVENTS = this.SLACK_CLIENT.RTM_EVENTS;
         this.initSlackWebClient();
         return this.initSlackRTMClient();
-    }
-
-    public getRTMPromise(): Promise<any> {
-        return this.initRTMPromise;
     }
 
     private initSlackWebClient(): void {

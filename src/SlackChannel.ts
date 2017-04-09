@@ -1,6 +1,6 @@
 import { SlackProxy } from './SlackProxy';
 import { Utils } from './Utils';
-import { Channel } from './Channel';
+import { Channel } from './model/Channel';
 
 class SlackChannel {
 
