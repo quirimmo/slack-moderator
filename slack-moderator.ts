@@ -10,16 +10,11 @@ import { File } from "./src/model/File";
 console.log('Slack Moderator Started!');
 
 SlackProxy.getInstance().bindActionOnMessageReceived(function(msg) {
-
-    console.log(msg);
-
-    // File f = new File();
-
     // moderate text messages
-    // SlackMessage.analyseMessagesForInappropriateWords(msg);
+    SlackMessage.analyseMessagesForInappropriateWords(msg);
 
     // detect file sharing
-    // SlackMessage.analyseMessagesForFileSharing(msg);
+    SlackMessage.analyseMessagesForFileSharing(msg);
 });
 
 // detect external accesses every five minutes

@@ -3,6 +3,9 @@ import { SlackChannel } from './SlackChannel';
 import { SlackUser } from './SlackUser';
 import { Utils } from './../utility/Utils';
 import { Message } from './../model/Message';
+import { File } from './../model/File';
+import { Channel } from './../model/Channel';
+import { User } from './../model/User';
 
 class SlackMessage {
 
@@ -43,7 +46,7 @@ class SlackMessage {
         let returnPromise: Promise<any>;
         SlackProxy.getInstance().moderators.forEach((moderator: string) => {
             returnPromise= new Promise((resolve: any, reject: any) => {
-                this.sendMessageThroughWeb(msg, moderator).then((data: any) => {
+                SlackMessage.sendMessageThroughWeb(msg, moderator).then((data: any) => {
                     resolve();
                 });
             });
@@ -53,30 +56,33 @@ class SlackMessage {
     }
 
 
-    public static analyseMessagesForInappropriateWords(msg: Message): void {
+    public static analyseMessagesForInappropriateWords(msg: any): void {
         if (msg.type === 'message' && !msg.subtype) {
+            let message: Message = new Message(msg.id, msg.text, msg.channel, msg.user, msg.type, msg.subtype, msg.ts, msg.file);
             let regexp;
             SlackProxy.getInstance().inappropriateWords.forEach((word) => {
                 regexp = new RegExp(word, 'i');
                 if (msg.text.match(regexp)) {
-                    this.reportInappropriateWordUse(word, msg);
+                    SlackMessage.reportInappropriateWordUse(word, message);
                 }
             });
         }
     }
 
 
-    public static analyseMessagesForFileSharing(msg: Message): void {
+    public static analyseMessagesForFileSharing(msg: any): void {
         if (msg.subtype && msg.subtype === 'file_share') {
+            let file: File = new File(msg.file.id, msg.file.name, msg.file.title, msg.file.filetype, msg.file.permalink);
+            let message: Message = new Message(msg.id, msg.text, msg.channel, msg.user, msg.type, msg.subtype, msg.ts, file);
             let channelPromise = SlackChannel.getChannelByID(msg.channel);
             let userPromise = SlackUser.getUserById(msg.user);
             Promise.all([
                 channelPromise,
                 userPromise
             ]).then((data: any) => {
-                let channel = data[0];
-                let user = data[1];
-                SlackMessage.sendMessageToAllModerators(Utils.getFileSharingMsgText(user, channel, msg));
+                let channel: Channel = new Channel(data[0].id, data[0].name);
+                let user: User = new User(data[1].id, data[1].name, data[1].real_name);
+                SlackMessage.sendMessageToAllModerators(Utils.getFileSharingMsgText(user, channel, message));
             });
         }
     }
@@ -89,8 +95,8 @@ class SlackMessage {
             channelPromise,
             userPromise
         ]).then((data: any) => {
-            let channel = data[0];
-            let user = data[1];
+            let channel: Channel = new Channel(data[0].id, data[0].name);
+            let user: User = new User(data[1].id, data[1].name, data[1].real_name);
             SlackMessage.sendMessageToAllModerators(Utils.getInappropriateMsgText(user, channel, msg, word));
         });
     }
