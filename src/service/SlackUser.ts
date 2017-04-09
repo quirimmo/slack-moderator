@@ -5,6 +5,9 @@ class SlackUser {
 
     private constructor() { }
 
+    /**
+     * Get the list of all the users associated to the web api token team
+     */
     public static getUsersList(): Promise<any> {
         let returnPromise: Promise<any> = new Promise((resolve: any, reject: any) => {
             SlackProxy.getInstance().webClient.users.list((err: any, res: any) => {
@@ -14,6 +17,10 @@ class SlackUser {
         return returnPromise;
     }
 
+    /**
+     * Return the user assocaited to the given id
+     * @param userID The id of the user to look for
+     */
     public static getUserById(userID: string): Promise<any> {
         return this.getUsersList().then((members: any) => {
             return members.find((member: any) => {
@@ -22,7 +29,10 @@ class SlackUser {
         });
     }
 
-    // needs the paid version of slack in order to get accesses logs
+    /**
+     * Analyse the list of the accesses looking for external accesses from the AIB intraned
+     * Needs the paid version of slack in order to work
+     */
     public static analyseAccesses(): void {
         SlackUser.accessLogs().then((logins) => {
             // OBJECT STRUCTURE
@@ -41,6 +51,10 @@ class SlackUser {
         });
     }
 
+    /**
+     * Get the access logs through the web api 
+     * Needs the paid version of slack in order to work
+     */
     public static accessLogs(): Promise<any> {
         var returnPromise: Promise<any> = new Promise((resolve: any, reject: any) => {
             SlackProxy.getInstance().webClient.team.accessLogs(function(err, res) {

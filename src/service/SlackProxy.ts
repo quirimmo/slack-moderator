@@ -49,11 +49,18 @@ class SlackProxy implements SlackEvents {
         return this.initSlackRTMClient();
     }
 
+    /**
+     * Init the slack web api
+     */
     private initSlackWebClient(): void {
         let WebClient = this.SLACK_CLIENT.WebClient;
         this.webClient = new WebClient(SlackProxy.API_TOKEN);
     }
 
+    /**
+     * Init the slack RTM api
+     * Return a promise when the RTM has successfully connected
+     */
     private initSlackRTMClient(): Promise<any> {
         let RtmClient: any = this.SLACK_CLIENT.RtmClient;
         this.rtmClient = new RtmClient(SlackProxy.BOT_TOKEN);

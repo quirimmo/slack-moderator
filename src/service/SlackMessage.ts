@@ -89,7 +89,10 @@ class SlackMessage {
         }
     }
 
-
+    /**
+     * Analyse a message looking for a file shared
+     * @param msg Message to be analysed
+     */
     public static analyseMessagesForFileSharing(msg: any): void {
         if (msg.subtype && msg.subtype === 'file_share') {
             let file: File = new File(msg.file.id, msg.file.name, msg.file.title, msg.file.filetype, msg.file.permalink);
@@ -107,7 +110,11 @@ class SlackMessage {
         }
     }
 
-    
+    /**
+     * Report the use of the given inappropriate word inside the given message
+     * @param word Inappropriate word detected in the message
+     * @param msg Message which violates the words detection
+     */
     public static reportInappropriateWordUse(word: string, msg: Message): void {
         let channelPromise = SlackChannel.getChannelByID(msg.channel);
         let userPromise = SlackUser.getUserById(msg.user);

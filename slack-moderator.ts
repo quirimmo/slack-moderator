@@ -14,4 +14,5 @@ SlackProxy.getInstance().bindActionOnMessageReceived(function(msg) {
 });
 
 // detect external accesses every five minutes
-setInterval(SlackUser.analyseAccesses, 60 * 5 * 1000);
+// needs the paid version of slack in order to be executed, otherwise it will throw the error "paid version needed"
+// setInterval(SlackUser.analyseAccesses, 60 * 5 * 1000);
